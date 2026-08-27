@@ -1,5 +1,6 @@
 package com.example.library.controller;
 
+import com.example.library.dto.book.BookPatchDTO;
 import com.example.library.dto.book.BookRequestDTO;
 import com.example.library.dto.book.BookResponseDTO;
 import com.example.library.repository.BookRepository;
@@ -32,14 +33,16 @@ public class BookController {
         return bookService.create(request);
     }
 
-//    @PutMapping("/{id}")
-//    public BookResponseDTO update(@PathVariable Long id,
-//                                  @Valid @RequestBody BookRequestDTO request) {
-//        return bookService.update(id, request);
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public BookResponseDTO patch(@PathVariable Long id) {}
+    @PutMapping("/{id}")
+    public BookResponseDTO update(@PathVariable Long id,
+                                  @Valid @RequestBody BookRequestDTO request) {
+        return bookService.update(id, request);
+    }
+
+    @PatchMapping("/{id}")
+    public void patch(@PathVariable Long id, @RequestBody BookPatchDTO request) {
+        bookService.update(id, request);
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
