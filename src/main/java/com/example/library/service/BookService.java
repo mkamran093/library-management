@@ -14,28 +14,11 @@ import java.util.List;
 @Service
 public class BookService {
 
-    Long nextId = 1L;
-
     @Autowired
     BookRepository bookRepository;
-//    BookRepository bookRepository;
-//
-//    public BookService(BookRepository bookRepository) {
-//        this.bookRepository = bookRepository;
-//    }
 
     public List<BookResponseDTO> getAll() {
-        List<Book> books = bookRepository.findAll();
-        List<BookResponseDTO> response = new ArrayList<>();
-        for (Book book: books) {
-            response.add(new BookResponseDTO(
-                    book.getId(),
-                    book.getTitle(),
-                    book.getAuthor(),
-                    book.isAvailable()
-            ));
-        }
-        return response;
+        return bookRepository.findAll();
     }
 
     public BookResponseDTO getById(Long id) {
@@ -44,23 +27,26 @@ public class BookService {
                 book.getId(),
                 book.getTitle(),
                 book.getAuthor(),
-                book.isAvailable()
+                book.getIsbn(),
+                book.getAvailableCopies() > 0
         );
     }
 
     public BookResponseDTO create(@Valid BookRequestDTO request) {
-        Book book = new Book(
-                nextId++,
+        Book book = new Book();
+        book.setTitle(request.title());
+        book.setAuthor(request.author());
+        book.setIsbn(request.isbn());
+        book.setPublicationYear(request.publicationYear());
+        book.setTotalCopies(request.totalCopies());
+        book.setAvailableCopies(request.availableCopies());
+        Long id = bookRepository.create(book);
+        return new BookResponseDTO(
+                id,
                 request.title(),
                 request.author(),
-                true
-        );
-        bookRepository.create(book);
-        return new BookResponseDTO(
-                book.getId(),
-                book.getTitle(),
-                request.author(),
-                book.isAvailable()
+                request.isbn(),
+                request.availableCopies() > 0
         );
     }
 

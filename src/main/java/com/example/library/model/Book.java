@@ -6,17 +6,32 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-    private boolean available;
+    private String isbn;
+    private int publicationYear;
+    private int totalCopies;
+    private int availableCopies;
 
     public Book() {
 
     }
 
-    public Book(Long id, String title, String author, boolean available) {
+    public Book(Long id, String title, String author, String isbn, int publicationYear, int totalCopies, int availableCopies) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.available = available;
+        this.isbn = isbn;
+        this.publicationYear = publicationYear;
+        this.totalCopies = totalCopies;
+        this.availableCopies = availableCopies;
+    }
+
+    public Book(String title, String author, String isbn, int publicationYear, int totalCopies, int availableCopies) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.publicationYear = publicationYear;
+        this.totalCopies = totalCopies;
+        this.availableCopies = availableCopies;
     }
 
     public Long getId() {
@@ -43,11 +58,35 @@ public class Book {
         this.author = author;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
     }
 }
