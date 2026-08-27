@@ -1,31 +1,32 @@
 package com.example.library.repository;
 
 import com.example.library.model.Book;
+import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-/**
- * Data-access contract for books. Kept as an interface so the service
- * layer depends on an abstraction, not on JdbcTemplate directly - this
- * is also what makes the service layer trivially mockable in unit tests.
- */
-public interface BookRepository {
+@Repository
+public class BookRepository {
 
-    Book save(Book book);
+    ArrayList<Book> books = new ArrayList<>();
 
-    Optional<Book> findById(Long id);
+    public List<Book> findAll() {
+        return books;
+    }
 
-    List<Book> findAll();
+    public Book findById(Long id) {
+        return books.stream()
+                .filter(book -> book.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
 
-    boolean existsByIsbn(String isbn);
+    public void create(Book book) {
+        books.add(book);
+    }
 
-    void update(Book book);
-
-    void deleteById(Long id);
-
-    /** Atomically decrement available copies; returns true if a copy was actually available. */
-    boolean decrementAvailableCopies(Long bookId);
-
-    void incrementAvailableCopies(Long bookId);
+    public void delete(Long id) {
+        books.removeIf(book -> book.getId().equals(id));
+    }
 }
